@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: テンプレート追加プラグイン
+Bundle-SymbolicName: com.github.nobino.template
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: NOBINO
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
