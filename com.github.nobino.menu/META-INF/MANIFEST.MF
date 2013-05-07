@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: リソースの情報を得るプラグイン
+Bundle-SymbolicName: com.github.nobino.menu; singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: NOBINO
+Require-Bundle: org.eclipse.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
