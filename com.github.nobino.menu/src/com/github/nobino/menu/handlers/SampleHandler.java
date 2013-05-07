@@ -6,6 +6,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -25,10 +26,11 @@ public class SampleHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		MessageDialog.openInformation(
 				window.getShell(),
 				"リソースの情報を得るプラグイン",
-				"Hello, Eclipse world");
+				currentSelection.toString());
 		return null;
 	}
 }
