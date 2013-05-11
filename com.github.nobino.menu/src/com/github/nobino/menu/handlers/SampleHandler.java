@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -37,6 +36,36 @@ public class SampleHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
+		String selectionFilePath = getSelectionFilePath(currentSelection);
+		startNautilus(selectionFilePath);
+		
+		return null;
+	}
+
+	/**
+	 * @param selectionFilePath
+	 */
+	private void startNautilus(String selectionFilePath) {
+		ProcessBuilder nautilusBuilder = new ProcessBuilder("nautilus", selectionFilePath);
+		nautilusBuilder.redirectErrorStream(true);
+		try {
+			Process nautilus = nautilusBuilder.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(nautilus.getInputStream()));
+			String read;
+			while (null != (read = reader.readLine())) {
+				System.out.println(read);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param currentSelection 
+	 * @return file path to current selection.
+	 */
+	private String getSelectionFilePath(ISelection currentSelection) {
 		StringBuilder builder = new StringBuilder();
 		if (currentSelection instanceof IStructuredSelection) {
 			IStructuredSelection sSelection = (IStructuredSelection) currentSelection;
@@ -57,21 +86,7 @@ public class SampleHandler extends AbstractHandler {
 				}
 			}
 		}
-		
-		ProcessBuilder explorerBuilder = new ProcessBuilder("nautilus", builder.toString());
-		explorerBuilder.redirectErrorStream(true);
-		try {
-			Process explorer = explorerBuilder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(explorer.getInputStream()));
-			String read;
-			while (null != (read = reader.readLine())) {
-				System.out.println(read);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
+		String selectionFilePath = builder.toString();
+		return selectionFilePath;
 	}
 }
